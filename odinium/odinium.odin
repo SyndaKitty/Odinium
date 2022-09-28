@@ -1,8 +1,6 @@
 package ium
 
-// import js "../dummy"
 import js "vendor:wasm/js"
-// import "core:fmt"
 
 @(export)
 load_sound_success :: proc(id: i32) {

@@ -1351,7 +1351,7 @@ function odinSetupDefaultImports(wasmMemoryInterface, consoleElement) {
 					let source = odiniumAudio.audioContext.createBufferSource();
 					source.buffer = odiniumAudio.buffers[id];
 					source.connect(odiniumAudio.audioContext.destination);
-					source.noteOn(0);
+					source.start();
 				}
 			}
 		},

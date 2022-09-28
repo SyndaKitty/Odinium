@@ -4,7 +4,7 @@ package game
 // import js "vendor:wasm/js"
 // import js "../dummy"
 // import gl "vendor:wasm/WebGL"
-import "../ium"
+import "../odinium"
 
 import "core:mem"
 
@@ -16,6 +16,8 @@ TempMemory := [4 * 1024]u8 {}
 TempArena: mem.Arena
 TempAllocator: mem.Allocator
 
+spell1: i32
+
 main :: proc() {
     mem.arena_init(&HeapArena, HeapMemory[:])
     HeapAllocator = mem.arena_allocator(&HeapArena)
@@ -25,10 +27,10 @@ main :: proc() {
     TempAllocator = mem.arena_allocator(&TempArena)
     context.temp_allocator = TempAllocator
 
-    ium.load_sound("http://localhost:8080/Spell1.wav")
+    spell1 = odinium.load_sound("http://localhost:8080/Spell1.wav")
 }
 
 @(export)
 step :: proc(dt: f64) {
-    
+    odinium.play_sound(spell1)
 }
