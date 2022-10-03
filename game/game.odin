@@ -2,8 +2,7 @@ package game
 
 // import "vendor:wasm"
 // import js "vendor:wasm/js"
-// import js "../dummy"
-// import gl "vendor:wasm/WebGL"
+import gl "vendor:wasm/WebGL"
 import "../odinium"
 
 import "core:mem"
@@ -28,9 +27,25 @@ main :: proc() {
     context.temp_allocator = TempAllocator
 
     spell1 = odinium.load_sound("http://localhost:8080/Spell1.wav")
+    gl.CreateCurrentContextById("game-canvas", {})
 }
 
 @(export)
 step :: proc(dt: f64) {
-    odinium.play_sound(spell1)
+    if gl.SetCurrentContextById("game-canvas") {
+        width, height := gl.DrawingBufferWidth(), gl.DrawingBufferHeight()
+        gl.Viewport(0, 0, width, height)
+        gl.ClearColor(0.5, 0.5, 0.5, 1.0)
+        gl.Clear(gl.COLOR_BUFFER_BIT)
+    }
+}
+
+@(export)
+load_sound_success :: proc(id: i32) {
+    
+}
+
+@(export)
+load_sound_error :: proc(id: i32) {
+    
 }

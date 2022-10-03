@@ -1321,7 +1321,6 @@ function odinSetupDefaultImports(wasmMemoryInterface, consoleElement) {
 			// audio: audioContext,
 			load_sound: (str_ptr, str_len) => {
 				let url = wasmMemoryInterface.loadString(str_ptr, str_len);
-				console.log(url);
 				let id = odiniumAudio.buffers.length;
 				let request = new XMLHttpRequest();
 				request.open('GET', url, true);

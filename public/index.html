@@ -5,17 +5,44 @@
         <style>
             * { margin: 0; padding: 0;} 
             html, body { width: 100%; height: 100% }
-            canvas { display: block; }
+            canvas { display: block; position: absolute; top: 0px; left: 0px; }
         </style>
         <script type="text/javascript" src="runtime.js"></script>
     </head>
     <body>
-        <canvas id="game-canvas"></canvas>
+        <canvas id="game-canvas" width="800" height="600"></canvas>
+        <canvas id="2d-canvas" width="800" height="600"></canvas>
         <script type="text/javascript">
-            let canvas = document.getElementById('game-canvas');
-            // TODO: Let player know to click to start
-            canvas.addEventListener('click', function() {
+            var running = false;
+            let canvas = document.getElementById("game-canvas");
+            let canvas2d = document.getElementById("2d-canvas");
+            
+            function resize() {
+                let gameCanvas = document.getElementById("game-canvas");
+                gameCanvas.width = window.innerWidth;
+                gameCanvas.height = window.innerHeight;
+                let canvas2d = document.getElementById("2d-canvas");
+                canvas2d.width = window.innerWidth;
+                canvas2d.height = window.innerHeight;
+
+                if (!running) {
+                    let ctx = canvas2d.getContext("2d");
+                    ctx.font = "42px arial";
+                    ctx.textAlign = "center";
+                    ctx.fillText("Click to start", canvas.width / 2, canvas.height / 2)
+                }
+            }
+
+            window.addEventListener("resize", resize);
+            resize();
+
+            canvas2d.addEventListener("click", function() {
+                if (running) return;
+                running = true;
                 odin.runWasm("http://localhost:8080/.wasm");
+                let ctx = canvas2d.getContext("2d");
+                ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+                canvas2d.hidden = true;
             })
         </script>
     </body>
